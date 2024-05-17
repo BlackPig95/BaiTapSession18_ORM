@@ -38,22 +38,22 @@ public class ProductController
     @GetMapping("/add")
     public String viewAdd(Model model)
     {
-        model.addAttribute("product", new Product());
+        model.addAttribute("product", new ProductDto());
         model.addAttribute("categories", categoryService.findAll());
         return "product/add";
     }
 
     @PostMapping("/add")
-    public String add(@Validated @ModelAttribute("product") Product product, BindingResult result, Model model)
+    public String add(@Validated @ModelAttribute("product") ProductDto productDto, BindingResult result, Model model)
     {
         if (result.hasErrors())
         {
-            model.addAttribute("product", product);
+            model.addAttribute("product", productDto);
             model.addAttribute("categories", categoryService.findAll());
             return "product/add";
         } else
         {
-            productService.save(product);
+            productService.save(productDto);
             return "redirect:/product/view";
         }
     }
@@ -67,16 +67,16 @@ public class ProductController
     }
 
     @PostMapping("/edit")
-    public String updateProduct(@Validated @ModelAttribute("product") Product product, BindingResult result, Model model)
+    public String updateProduct(@Validated @ModelAttribute("product") ProductDto productDto, BindingResult result, Model model)
     {
         if (result.hasErrors())
         {
-            model.addAttribute("product", product);
+            model.addAttribute("product", productDto);
             model.addAttribute("categories", categoryService.findAll());
             return "product/edit";
         } else
         {
-            productService.save(product);
+            productService.save(productDto);
             return "redirect:/product/view";
         }
     }

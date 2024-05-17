@@ -1,5 +1,7 @@
 package com.ra.baitapsession18_orm.service.impl;
 
+import com.ra.baitapsession18_orm.dao.ICategoryDao;
+import com.ra.baitapsession18_orm.dao.IProductDao;
 import com.ra.baitapsession18_orm.dao.impl.CategoryDao;
 import com.ra.baitapsession18_orm.dao.impl.ProductDao;
 import com.ra.baitapsession18_orm.dto.ProductDto;
@@ -12,11 +14,13 @@ import java.util.List;
 @Service
 public class ProductService implements IProductService
 {
-    private final ProductDao productDao;
+    private final IProductDao productDao;
+    private final ICategoryDao categoryDao;
 
-    public ProductService(ProductDao productDao)
+    public ProductService(IProductDao productDao, ICategoryDao categoryDao)
     {
         this.productDao = productDao;
+        this.categoryDao = categoryDao;
     }
 
     @Override
@@ -26,14 +30,29 @@ public class ProductService implements IProductService
     }
 
     @Override
-    public Product findById(int id)
+    public ProductDto findById(int id)
     {
-        return productDao.findById(id);
+        Product product = productDao.findById(id);
+        ProductDto productDto = new ProductDto();
+        productDto.setId(product.getId());
+        productDto.setName(product.getName());
+        productDto.setPrice(product.getPrice());
+        productDto.setStock(product.getStock());
+        productDto.setStatus(product.getStatus());
+        productDto.setCategoryId(product.getCategory().getId());
+        return productDto;
     }
 
     @Override
-    public boolean save(Product product)
+    public boolean save(ProductDto productDto)
     {
+        Product product = new Product();
+        product.setId(productDto.getId());
+        product.setName(productDto.getName());
+        product.setPrice(productDto.getPrice());
+        product.setStock(productDto.getStock());
+        product.setStatus(productDto.getStatus());
+        product.setCategory(categoryDao.findById(productDto.getCategoryId()));
         return productDao.save(product);
     }
 

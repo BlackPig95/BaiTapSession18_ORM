@@ -18,9 +18,16 @@ import javax.validation.constraints.NotNull;
 public class ProductDto
 {
     private Integer id;
+    @NotEmpty(message = "Name can't be empty")
     private String name;
+    @Min(value = 0, message = "Price must be greater than 0")
+    @NotNull
     private Double price;
+    @Min(value = 0, message = "Stock can't be negative")
+    @NotNull
     private Integer stock;
+    @NotNull
     private Boolean status;
+    @NotNull
     private Integer categoryId;
 }

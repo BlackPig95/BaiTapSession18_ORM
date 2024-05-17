@@ -27,7 +27,7 @@
     </div>
     <div class="mb-3">
         <label class="form-label">Product category</label>
-        <select>
+        <select th:field="*{categoryId}">
             <option th:each="c : ${categories}" th:text="${c.name}" th:value="${c.id}"></option>
         </select>
     </div>

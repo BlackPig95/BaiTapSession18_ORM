@@ -9,9 +9,9 @@ public interface IProductService
 {
     List<Product> findAll();
 
-    Product findById(int id);
+    ProductDto findById(int id);
 
-    boolean save(Product product);
+    boolean save(ProductDto productDto);
 
     boolean delete(Integer id);
 }
